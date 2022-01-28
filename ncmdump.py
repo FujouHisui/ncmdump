@@ -79,7 +79,22 @@ def dump(file_path):
 
 
 if __name__ == '__main__':
-    file_list = ['陈芳语 - 爱你.ncm', '李翊君 - 雨蝶.ncm']
+    directory='/storage/emulated/0/netease/cloudmusic/Music/'
+    dir_list=os.listdir(directory)
+    file_list = []
+    for item in dir_list:
+        if item[-4:] == ".ncm":
+            file_list.append(item)
+    if len(file_list) == 0:
+        print("ncm file not found")
+        exit(1)
+    print("start dump:")
+    #print(file_list)
     for file in file_list:
-        filepath = "F:\CloudMusic\\"+file
-        dump(filepath)
+        filepath = directory + file
+        result = dump(filepath)
+        if result is not None:
+            print(result)
+            os.remove(filepath)
+    print("\ndump finished, original ncm files has been removed")
+    exit(0)
